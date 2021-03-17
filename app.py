@@ -55,7 +55,9 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
+    total_stations = session.query(Station.name, Station.station)
+    stations = pd.read_sql(total_stations.statement, stations_query.session.bind)
+    return jsonify(stations.to_dict())
     
-
 if __name__ == '__main__':
     app.run(debug=True)
